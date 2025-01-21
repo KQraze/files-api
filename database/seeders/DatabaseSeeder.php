@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Role;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,6 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Role::factory(2)->state(new Sequence(
+            ['type' => 'author'],
+            ['type' => 'co-author'],
+        ))->create();
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

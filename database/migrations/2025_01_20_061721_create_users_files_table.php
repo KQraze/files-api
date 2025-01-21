@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users_files', function (Blueprint $table) {
-            $table->foreignId("user_id")->constrained("users", "user_id")->onDelete("cascade");
-            $table->foreignId("file_id")->constrained("files", "file_id")->onDelete("cascade");
-            $table->foreignId("role_id")->constrained("roles", "role_id")->onDelete("cascade");
+            $table->foreignId("user_id")->constrained("users")->onDelete("cascade");
+            $table->foreignId("file_id")->constrained("files")->onDelete("cascade");
+            $table->foreignId("role_id")->constrained("roles")->onDelete("cascade");
             $table->timestamps();
         });
     }

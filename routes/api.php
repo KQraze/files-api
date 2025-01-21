@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\FileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,10 +16,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/authorization', [UserController::class, 'authorization']);
+Route::post('/registration', [UserController::class, 'registration']);
+
+Route::get('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
+
+Route::prefix('files')->group(function () {
+    Route::post('/', [FileController::class, 'addFile']);
+    Route::patch('/{file_id}', [FileController::class, 'updateFile']);
+    Route::delete('/{file_id}', [FileController::class, 'deleteFile']);
+    Route::get('/{file_id}', [FileController::class, 'getFile']);
+    Route::get('/disk', [FileController::class, 'getDiskFiles']);
+    Route::post('/shared', [FileController::class, 'getSharedFiles']);
+})->middleware('auth:sanctum');
+
 /**
- * POST /authorization
- * POST /registration
- * GET /logout
  * POST /files
  * PATCH /files/{file_id}
  * DELETE /files/{file_id}
