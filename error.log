@@ -1,0 +1,1 @@
+[Tue Jan 21 19:15:08.204856 2025] [php:error] [pid 1722553] [client 192.168.14.155:47516] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 67047424 bytes) in /srv/users/hpipbgxc/tcekjtn-m3/app/Http/Controllers/FileController.php on line 17

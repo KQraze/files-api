@@ -50,13 +50,13 @@ class User extends Authenticatable
         return (new User)->hasMany(UsersFile::class, 'user_id');
     }
 
-    public static function sharedFiles(): array
+    public static function sharedFiles(): HasMany
     {
-        return self::files()->where('role_id', 2)->get()->toArray();
+        return self::files()->where('role_id', 2);
     }
 
-    public static function diskFiles(): array
+    public static function diskFiles(): HasMany
     {
-        return self::files()->where('role_id', 1)->get()->toArray();
+        return self::files()->where('role_id', 1);
     }
 }

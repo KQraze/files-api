@@ -7,14 +7,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\FileRequest;
 use App\Models\File;
 use App\Models\User;
+use App\Models\UsersFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class FileController extends Controller
 {
-    public function addFile(FileRequest $request)
+    public function addFile(FileRequest $request): array
     {
-//        print_r(User::files()->get());
+//        dd(User::query()->where('id', $request->user()->id)
+//            ->with('files.file')
+//            ->get()
+//        );
+
 //        function getFileName($filename, $count = 0)
 //        {
 //            if (current(
@@ -31,12 +37,12 @@ class FileController extends Controller
         $createdFiles = [];
 
         if ($files) {
-            foreach ($files['files'] as $key => $file) {
+            foreach ($files['files'] as $file) {
                 $filePath = $file->store('files');
                 $fileName = $file->getClientOriginalName();
 
                 $createdFiles[] = File::create([
-                    'id' => Str::random(10),
+                    'file_id' => Str::random(10),
                     'name' => $fileName,
                     'url' => url('/') . '/' . $filePath,
                 ]);
