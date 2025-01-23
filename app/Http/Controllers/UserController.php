@@ -6,6 +6,7 @@ use App\Exceptions\ApiValidateException;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Requests\RegistrationRequest;
+use App\Models\UsersFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -38,8 +39,9 @@ class UserController extends Controller
         ];
     }
 
-    public function logout(Request $request): void
+    public function logout(Request $request): array
     {
+        return (UsersFile::diskFiles($request->user()->id));
         $request->user()->currentAccessToken()->delete();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\ApiValidateException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ApiRequest;
 use App\Http\Requests\FileRequest;
 use App\Models\File;
 use App\Models\User;
@@ -16,6 +17,7 @@ class FileController extends Controller
 {
     public function addFile(FileRequest $request): array
     {
+        dd(UsersFile::diskFiles($request->user()->id));
 //        dd(User::query()->where('id', $request->user()->id)
 //            ->with('files.file')
 //            ->get()
@@ -32,24 +34,24 @@ class FileController extends Controller
 //            }
 //        }
 //
-        $files = $request->allFiles();
+//        $files = $request->allFiles();
+//
+//        $createdFiles = [];
+//
+//        if ($files) {
+//            foreach ($files['files'] as $file) {
+//                $filePath = $file->store('files');
+//                $fileName = $file->getClientOriginalName();
+//
+//                $createdFiles[] = File::create([
+//                    'file_id' => Str::random(10),
+//                    'name' => $fileName,
+//                    'url' => url('/') . '/' . $fileName,
+//                ]);
+//            }
+//        }
 
-        $createdFiles = [];
-
-        if ($files) {
-            foreach ($files['files'] as $file) {
-                $filePath = $file->store('files');
-                $fileName = $file->getClientOriginalName();
-
-                $createdFiles[] = File::create([
-                    'file_id' => Str::random(10),
-                    'name' => $fileName,
-                    'url' => url('/') . '/' . $filePath,
-                ]);
-            }
-        }
-
-        return $createdFiles;
+//        return $createdFiles;
     }
 
     public function updateFile()
@@ -67,13 +69,13 @@ class FileController extends Controller
 
     }
 
-    public function getDiskFiles()
+    public function getDiskFiles(Request $request): array
     {
-
+        return UsersFile::diskFiles($request->user()->id);
     }
 
-    public function getSharedFiles()
+    public function getSharedFiles(ApiRequest $request)
     {
-
+        return UsersFile::sharedFiles($request->user()->id);
     }
 }

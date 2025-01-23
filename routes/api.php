@@ -27,7 +27,7 @@ Route::prefix('files')->group(function () {
     Route::delete('/{file_id}', [FileController::class, 'deleteFile'])->middleware('auth:sanctum');
     Route::get('/{file_id}', [FileController::class, 'getFile'])->middleware('auth:sanctum');
     Route::get('/disk', [FileController::class, 'getDiskFiles'])->middleware('auth:sanctum');
-    Route::post('/shared', [FileController::class, 'getSharedFiles'])->middleware('auth:sanctum');
+    Route::get('/shared', [FileController::class, 'getSharedFiles'])->middleware('auth:sanctum');
 });
 
 /**
