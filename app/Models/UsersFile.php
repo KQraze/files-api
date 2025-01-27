@@ -26,7 +26,12 @@ class UsersFile extends Model
         return $this->belongsTo(Role::class, 'role_id');
     }
 
-    public static function sharedFiles(int $user_id)
+    public static function allFiles(int $user_id): array
+    {
+        return [...self::diskFiles($user_id), ...self::sharedFiles($user_id)];
+    }
+
+    public static function sharedFiles(int $user_id): array
     {
         return self::query()
             ->where('user_id', $user_id)
@@ -59,7 +64,7 @@ class UsersFile extends Model
                     ->with(['user', 'role'])
                     ->get()
                     ->map(fn ($fileChildren) => [
-                        "fullname" => $fileChildren->user->last_name . ' ' . $fileChildren->user->first_name,
+                        "fullname" => $fileChildren->user->first_name . ' ' . $fileChildren->user->last_name,
                         "email" => $fileChildren->user->email,
                         "type" => $fileChildren->role->type
                     ])

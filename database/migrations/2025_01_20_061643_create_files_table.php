@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('file_id')->unique();
             $table->string('name');
             $table->string('url');
+            $table->string('storage_url')->unique();
             $table->timestamps();
         });
     }

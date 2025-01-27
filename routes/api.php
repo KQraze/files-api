@@ -21,13 +21,16 @@ Route::post('/registration', [UserController::class, 'registration']);
 
 Route::get('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::prefix('files')->group(function () {
-    Route::post('/', [FileController::class, 'addFile'])->middleware('auth:sanctum');
-    Route::patch('/{file_id}', [FileController::class, 'updateFile'])->middleware('auth:sanctum');
-    Route::delete('/{file_id}', [FileController::class, 'deleteFile'])->middleware('auth:sanctum');
-    Route::get('/{file_id}', [FileController::class, 'getFile'])->middleware('auth:sanctum');
-    Route::get('/disk', [FileController::class, 'getDiskFiles'])->middleware('auth:sanctum');
-    Route::get('/shared', [FileController::class, 'getSharedFiles'])->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum')->prefix('files')->group(function () {
+    Route::post('', [FileController::class, 'addFile']);
+    Route::get('disk', [FileController::class, 'getDiskFiles']);
+    Route::get('shared', [FileController::class, 'getSharedFiles']);
+    Route::get('{file_id}', [FileController::class, 'getFile']);
+    Route::post('{file_id}/accesses', [FileController::class, 'setAccess']);
+    Route::patch('{file_id}', [FileController::class, 'updateFile']);
+    Route::delete('{file_id}', [FileController::class, 'deleteFile']);
+    Route::delete('{file_id}/accesses', [FileController::class, 'deleteAccess']);
 });
 
 /**

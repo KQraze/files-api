@@ -39,9 +39,8 @@ class UserController extends Controller
         ];
     }
 
-    public function logout(Request $request): array
+    public function logout(Request $request): void
     {
-        return (UsersFile::diskFiles($request->user()->id));
         $request->user()->currentAccessToken()->delete();
     }
 }
